@@ -1,0 +1,6 @@
+2026/05/28-15:03:02.732 4998 Reusing MANIFEST C:\Users\User\Desktop\CWS Git\tms-api\.wwebjs_auth\session-leave-management-system\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/05/28-15:03:02.733 4998 Recovering log #631
+2026/05/28-15:03:02.778 4998 Reusing old log C:\Users\User\Desktop\CWS Git\tms-api\.wwebjs_auth\session-leave-management-system\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000631.log 
+2026/05/28-15:04:50.854 18e5c Level-0 table #651: started
+2026/05/28-15:04:50.968 18e5c Level-0 table #651: 1385172 bytes OK
+2026/05/28-15:04:50.978 18e5c Delete type=0 #631

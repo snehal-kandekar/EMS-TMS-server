@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "index.js", "use": "@vercel/node" },
+    { "src": "cron/birthday.js", "use": "@vercel/node" },
+    { "src": "cron/anniversary.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/cron/birthday", "dest": "/cron/birthday.js" },
+    { "src": "/cron/anniversary", "dest": "/cron/anniversary.js" },
+    { "src": "/(.*)", "dest": "/index.js" }
+  ],
+    "crons": [
+    { "path": "/corn/birthday", "schedule": "0 9 * * *" },
+    { "path": "/corn/anniversary", "schedule": "30 9 * * *" }
+  ]
+}
