@@ -4,86 +4,18 @@ const mongoose = require("mongoose");
 const Ticket = require("../models/Ticket");
 const User = require("../models/User");
 const Notification = require("../models/notificationSchema");
-
+const { ticketStorage } = require("../config/cloudinary");
 const router = express.Router();
 
 /* ========= FILE UPLOAD ========= */
-const storage = multer.diskStorage({
-  destination: "uploads/",
-  filename: (req, file, cb) => cb(null, Date.now() + "_" + file.originalname),
-});
-
-const upload = multer({ storage });
-
-/* ================= CREATE TICKET ================= */
-//  router.post("/",upload.array("attachment", 5), async (req, res) => {
-//   try {
-//     const {category, priority, description } = req.body;
-
-//     if (!category || !priority) {
-//       return res.status(400).json({ message: "Missing required fields" });
-//     }
-// // ✅ LOGGED-IN USER ID (JWT middleware असणे गरजेचे)
-//     const employeeId = req.user?._id;
-//     if (!employeeId) {
-//       return res.status(401).json({ message: "Unauthorized user" });
-//     }
-
-//   try {
-//     const { employeeName, category, priority, description } = req.body;
-
-//     if ( !category || !priority) {
-//       return res.status(400).json({ message: "Missing required fields" });
-//     }
-
-//     // Generate ticket number
-//     const lastTicket = await Ticket.findOne().sort({ createdAt: -1 });
-//     const nextNumber = lastTicket?.ticketId
-//       ? parseInt(lastTicket.ticketId.split("-")[1]) + 1
-//       : 1;
-
-//     const attachments = req.files?.map(f => f.filename) || [];
-
-//     const ticket = await Ticket.create({
-//       ticketId: `TKT-${nextNumber}`,
-//        employeeName,
-//       category,
-//       priority,
-//       description,
-//      attachment: attachments,
-//       status: "Open",
-//       assignedTo: "IT Support",
-//       comments: [],
-
-//     });
-
-// // Notify IT Support users
-// const itUsers = await User.find({ role: "IT_SUPPORT" });
-
-// if (itUsers.length) {
-//   await Notification.insertMany(
-//     itUsers.map(it => ({
-//       user: it._id,
-//       type: "Ticket",
-//       message: `New ticket raised by ${employeeName}`,
-//       ticketRef: ticket._id,
-//     }))
-//   );
-
-//   console.log("🔔 Notification created successfully");
-// } else {
-//   console.log("⚠ No IT Support users found to notify");
-// }
-
-//     // 📧 Email
-//     // await sendNewTicketMail(ticket);
-
-//     res.status(201).json(ticket);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: "Ticket creation failed" });
-//   }
+// const storage = multer.diskStorage({
+//   destination: "uploads/",
+//   filename: (req, file, cb) => cb(null, Date.now() + "_" + file.originalname),
 // });
+
+// const upload = multer({ storage });
+
+
 router.post("/", upload.array("attachment", 5), async (req, res) => {
   try {
     const { employeeName, category, priority, description } = req.body;
@@ -103,7 +35,8 @@ router.post("/", upload.array("attachment", 5), async (req, res) => {
       ? parseInt(lastTicket.ticketId.split("-")[1]) + 1
       : 1;
 
-    const attachments = req.files?.map((f) => f.filename) || [];
+    // const attachments = req.files?.map((f) => f.filename) || [];
+const attachments = req.files?.map((f) => f.path) || [];
 
     const ticket = await Ticket.create({
       ticketId: `TKT-${nextNumber}`,
@@ -242,7 +175,11 @@ router.put("/:id", upload.array("attachment", 5), async (req, res) => {
 
     // Attachments (only once)
     if (req.files?.length) {
-      ticket.attachment.push(...req.files.map((f) => f.filename));
+      // ticket.attachment.push(
+      //   ...req.files.map((f) => f.filename));
+      ticket.attachment.push(
+  ...req.files.map((f) => f.path)
+);
     }
 
     await ticket.save();
