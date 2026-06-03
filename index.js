@@ -75,9 +75,9 @@ app.use((req, res, next) => {
 });
 
 /* ================= FILE UPLOAD ================= */
-// const uploadPath = path.join(__dirname, "uploads");
-// app.use("/uploads", express.static(uploadPath));
-// app.use("/uploads", express.static("uploads"));
+const uploadPath = path.join(__dirname, "uploads");
+app.use("/uploads", express.static(uploadPath));
+app.use("/uploads", express.static("uploads"));
 
 
 
