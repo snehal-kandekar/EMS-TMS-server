@@ -139,10 +139,20 @@ router.post("/", upload.array("attachment", 5), async (req, res) => {
     }
 
     res.status(201).json(ticket);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Ticket creation failed" });
-  }
+  } 
+  // catch (err) {
+  //   console.error(err);
+  //   res.status(500).json({ message: "Ticket creation failed" });
+  // }
+  catch (err) {
+  console.error("Ticket Create Error:", err);
+
+  res.status(500).json({
+    message: "Ticket creation failed",
+    error: err.message,
+    stack: process.env.NODE_ENV !== "production" ? err.stack : undefined,
+  });
+}
 });
 
 /* ================= GET ALL ================= */
