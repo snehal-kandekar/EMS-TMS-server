@@ -116,7 +116,7 @@ router.post("/", upload.array("attachment", 5), async (req, res) => {
       status: "Open",
       assignedTo: "IT_Support",
     });
-
+console.log("Ticket Created:", ticket);
     /* ================= NOTIFICATION ================= */
 
     // 🔔 Notify IT Support (MATCH ROLE EXACTLY)
