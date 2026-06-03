@@ -1,41 +1,4 @@
-// // // cloudinary.js
-// // import { v2 as cloudinary } from "cloudinary";
-// // import { CloudinaryStorage } from "multer-storage-cloudinary";
-
-// // cloudinary.config({
-// //   cloud_name: process.env.CLOUD_NAME,
-// //   api_key: process.env.CLOUD_KEY,
-// //   api_secret: process.env.CLOUD_SECRET,
-// // });
-
-// // const galleryStorage = new CloudinaryStorage({
-// //   cloudinary,
-// //   params: {
-// //     folder: "gallery",
-// //     resource_type: "auto",
-// //   },
-// // });
-// // const storage = new CloudinaryStorage({
-// //   cloudinary,
-// //   params: {
-// //     folder: "uploads",
-// //     resource_type: "auto",
-// //   },
-// // });
-
-// // const ticketStorage = new CloudinaryStorage({
-// //   cloudinary,
-// //   params: {
-// //     folder: "tickets",
-// //     resource_type: "auto",
-// //   },
-// // });
-
-// // export { cloudinary, storage  };
-
-
-
-
+// // cloudinary.js
 // import { v2 as cloudinary } from "cloudinary";
 // import { CloudinaryStorage } from "multer-storage-cloudinary";
 
@@ -44,6 +7,7 @@
 //   api_key: process.env.CLOUD_KEY,
 //   api_secret: process.env.CLOUD_SECRET,
 // });
+
 // const galleryStorage = new CloudinaryStorage({
 //   cloudinary,
 //   params: {
@@ -51,7 +15,6 @@
 //     resource_type: "auto",
 //   },
 // });
-// // General uploads
 // const storage = new CloudinaryStorage({
 //   cloudinary,
 //   params: {
@@ -60,7 +23,6 @@
 //   },
 // });
 
-// // Ticket uploads
 // const ticketStorage = new CloudinaryStorage({
 //   cloudinary,
 //   params: {
@@ -69,21 +31,36 @@
 //   },
 // });
 
-// export { cloudinary, storage, ticketStorage };
+// export { cloudinary, storage  };
 
 
 
 
-
-const { v2: cloudinary } = require("cloudinary");
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
+import { v2 as cloudinary } from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_KEY,
   api_secret: process.env.CLOUD_SECRET,
 });
+const galleryStorage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "gallery",
+    resource_type: "auto",
+  },
+});
+// General uploads
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "uploads",
+    resource_type: "auto",
+  },
+});
 
+// Ticket uploads
 const ticketStorage = new CloudinaryStorage({
   cloudinary,
   params: {
@@ -92,16 +69,4 @@ const ticketStorage = new CloudinaryStorage({
   },
 });
 
-const galleryStorage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: "gallery",
-    resource_type: "auto",
-  },
-});
-
-module.exports = {
-  cloudinary,
-  ticketStorage,
-  galleryStorage,
-};
+export { cloudinary, storage, ticketStorage };

@@ -4,19 +4,16 @@ const mongoose = require("mongoose");
 const Ticket = require("../models/Ticket");
 const User = require("../models/User");
 const Notification = require("../models/notificationSchema");
-const { ticketStorage } = require("../cloudinary");
+
 const router = express.Router();
 
 /* ========= FILE UPLOAD ========= */
-// const storage = multer.diskStorage({
-//   destination: "uploads/",
-//   filename: (req, file, cb) => cb(null, Date.now() + "_" + file.originalname),
-// });
-
-// const upload = multer({ storage });
-const upload = multer({
-  storage: ticketStorage,
+const storage = multer.diskStorage({
+  destination: "uploads/",
+  filename: (req, file, cb) => cb(null, Date.now() + "_" + file.originalname),
 });
+
+const upload = multer({ storage });
 
 router.post("/", upload.array("attachment", 5), async (req, res) => {
   try {
@@ -37,8 +34,7 @@ router.post("/", upload.array("attachment", 5), async (req, res) => {
       ? parseInt(lastTicket.ticketId.split("-")[1]) + 1
       : 1;
 
-    // const attachments = req.files?.map((f) => f.filename) || [];
-const attachments = req.files?.map((f) => f.path) || [];
+    const attachments = req.files?.map((f) => f.filename) || [];
 
     const ticket = await Ticket.create({
       ticketId: `TKT-${nextNumber}`,
@@ -177,11 +173,7 @@ router.put("/:id", upload.array("attachment", 5), async (req, res) => {
 
     // Attachments (only once)
     if (req.files?.length) {
-      // ticket.attachment.push(
-      //   ...req.files.map((f) => f.filename));
-      ticket.attachment.push(
-  ...req.files.map((f) => f.path)
-);
+      ticket.attachment.push(...req.files.map((f) => f.filename));
     }
 
     await ticket.save();
