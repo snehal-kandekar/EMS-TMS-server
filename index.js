@@ -75,9 +75,9 @@ app.use((req, res, next) => {
 });
 
 /* ================= FILE UPLOAD ================= */
-const uploadPath = path.join(__dirname, "uploads");
-app.use("/uploads", express.static(uploadPath));
-app.use("/uploads", express.static("uploads"));
+// const uploadPath = path.join(__dirname, "uploads");
+// app.use("/uploads", express.static(uploadPath));
+// app.use("/uploads", express.static("uploads"));
 
 
 
@@ -113,7 +113,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/teams", teamRoutes);
 app.use("/api/polls", pollRoutes);
 // Serve uploads folder statically
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+//app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/projects", projectRoutes);
 app.use("/api/task-types", require("./routes/taskTypeRoutes"));
 app.use("/announcements", require("./routes/announcementRoutes"));

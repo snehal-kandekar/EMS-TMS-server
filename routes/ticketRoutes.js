@@ -14,7 +14,9 @@ const router = express.Router();
 // });
 
 // const upload = multer({ storage });
-
+const upload = multer({
+  storage: ticketStorage,
+});
 
 router.post("/", upload.array("attachment", 5), async (req, res) => {
   try {
