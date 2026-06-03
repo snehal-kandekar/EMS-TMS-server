@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const Ticket = require("../models/Ticket");
 const User = require("../models/User");
 const Notification = require("../models/notificationSchema");
-const { ticketStorage } = require("../config/cloudinary");
+const { ticketStorage } = require("../cloudinary");
 const router = express.Router();
 
 /* ========= FILE UPLOAD ========= */
